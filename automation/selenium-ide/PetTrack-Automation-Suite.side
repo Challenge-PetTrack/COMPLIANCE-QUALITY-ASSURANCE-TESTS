@@ -1,0 +1,482 @@
+{
+  "id": "e8a1b9c0-4f12-4d3a-9c11-202610290001",
+  "version": "2.0",
+  "name": "PetTrack - Suite de Automação E2E (Sprint 4)",
+  "url": "http://localhost:8080",
+  "tests": [
+    {
+      "id": "tc01-auth-rbac-403",
+      "name": "CT-AUTO-01: Autenticação de Tutor e Bloqueio RBAC na Área Admin (/403)",
+      "commands": [
+        {
+          "id": "c1-01",
+          "comment": "Garante que a sessão inicia deslogada e acessa a tela de Login",
+          "command": "open",
+          "target": "/login",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "c1-02",
+          "comment": "Define resolução padrão Desktop",
+          "command": "setWindowSize",
+          "target": "1366x900",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "c1-03",
+          "comment": "Verifica título principal da aplicação na tela de login",
+          "command": "assertText",
+          "target": "css=h2.fw-bold",
+          "targets": [["css=h2.fw-bold", "css:finder"]],
+          "value": "PetTrack"
+        },
+        {
+          "id": "c1-04",
+          "comment": "Insere dado controlado de entrada: E-mail da Tutora",
+          "command": "type",
+          "target": "id=email",
+          "targets": [
+            ["id=email", "id"],
+            ["name=email", "name"],
+            ["css=#email", "css:finder"]
+          ],
+          "value": "ana.silva@icloud.com"
+        },
+        {
+          "id": "c1-05",
+          "comment": "Insere dado controlado de entrada: Senha da Tutora",
+          "command": "type",
+          "target": "id=senha",
+          "targets": [
+            ["id=senha", "id"],
+            ["name=senha", "name"],
+            ["css=#senha", "css:finder"]
+          ],
+          "value": "tutor123"
+        },
+        {
+          "id": "c1-06",
+          "comment": "Submete o formulário de autenticação",
+          "command": "click",
+          "target": "css=button[type='submit']",
+          "targets": [["css=button[type='submit']", "css:finder"]],
+          "value": ""
+        },
+        {
+          "id": "c1-07",
+          "comment": "Valida que o Portal do Tutor foi carregado com sucesso",
+          "command": "assertElementPresent",
+          "target": "xpath=//h4[contains(.,'Meus Pets')]",
+          "targets": [["xpath=//h4[contains(.,'Meus Pets')]", "xpath:innerText"]],
+          "value": ""
+        },
+        {
+          "id": "c1-08",
+          "comment": "Tenta acessar rota exclusiva de Administrador (/admin/pets) com perfil ROLE_TUTOR",
+          "command": "open",
+          "target": "/admin/pets",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "c1-09",
+          "comment": "Valida saída esperada: Bloqueio 403 - Acesso Negado",
+          "command": "assertText",
+          "target": "css=h2.fw-bold",
+          "targets": [["css=h2.fw-bold", "css:finder"]],
+          "value": "403 - Acesso Negado"
+        }
+      ]
+    },
+    {
+      "id": "tc02-cadastro-pet-oracle",
+      "name": "CT-AUTO-02: Login Admin e Cadastro de Novo Pet via Procedure Oracle",
+      "commands": [
+        {
+          "id": "c2-01",
+          "comment": "Acessa a página de login",
+          "command": "open",
+          "target": "/login",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "c2-02",
+          "comment": "Preenche e-mail controlado do Administrador",
+          "command": "type",
+          "target": "id=email",
+          "targets": [["id=email", "id"]],
+          "value": "admin@pettrack.com"
+        },
+        {
+          "id": "c2-03",
+          "comment": "Preenche senha controlada do Administrador",
+          "command": "type",
+          "target": "id=senha",
+          "targets": [["id=senha", "id"]],
+          "value": "admin123"
+        },
+        {
+          "id": "c2-04",
+          "comment": "Realiza login como ROLE_ADMIN",
+          "command": "click",
+          "target": "css=button[type='submit']",
+          "targets": [["css=button[type='submit']", "css:finder"]],
+          "value": ""
+        },
+        {
+          "id": "c2-05",
+          "comment": "Valida carregamento do Painel Veterinário & Clínico",
+          "command": "assertText",
+          "target": "css=h2.fw-bold",
+          "targets": [["css=h2.fw-bold", "css:finder"]],
+          "value": "Painel Veterinário & Clínico"
+        },
+        {
+          "id": "c2-06",
+          "comment": "Navega para o formulário de Novo Paciente (/admin/pets/novo)",
+          "command": "open",
+          "target": "/admin/pets/novo",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "c2-07",
+          "comment": "Preenche Nome do Pet controlado",
+          "command": "type",
+          "target": "id=nome",
+          "targets": [["id=nome", "id"]],
+          "value": "Apollo QA"
+        },
+        {
+          "id": "c2-08",
+          "comment": "Preenche Espécie controlada",
+          "command": "type",
+          "target": "id=especie",
+          "targets": [["id=especie", "id"]],
+          "value": "Cão"
+        },
+        {
+          "id": "c2-09",
+          "comment": "Preenche Raça controlada",
+          "command": "type",
+          "target": "id=raca",
+          "targets": [["id=raca", "id"]],
+          "value": "Pastor Alemão"
+        },
+        {
+          "id": "c2-10",
+          "comment": "Seleciona Sexo Macho (M)",
+          "command": "select",
+          "target": "id=sexo",
+          "targets": [["id=sexo", "id"]],
+          "value": "value=M"
+        },
+        {
+          "id": "c2-11",
+          "comment": "Preenche Idade controlada (4.0 anos)",
+          "command": "type",
+          "target": "id=idade",
+          "targets": [["id=idade", "id"]],
+          "value": "4.0"
+        },
+        {
+          "id": "c2-12",
+          "comment": "Preenche Peso controlado (28.50 kg)",
+          "command": "type",
+          "target": "id=peso",
+          "targets": [["id=peso", "id"]],
+          "value": "28.50"
+        },
+        {
+          "id": "c2-13",
+          "comment": "Seleciona o primeiro Tutor cadastrado",
+          "command": "select",
+          "target": "id=tutor",
+          "targets": [["id=tutor", "id"]],
+          "value": "index=1"
+        },
+        {
+          "id": "c2-14",
+          "comment": "Seleciona a primeira Clínica Veterinária cadastrada",
+          "command": "select",
+          "target": "id=clinica",
+          "targets": [["id=clinica", "id"]],
+          "value": "index=1"
+        },
+        {
+          "id": "c2-15",
+          "comment": "Submete o formulário acionando PKG_PETTRACK_CADASTRO.PRC_INSERT_PET",
+          "command": "click",
+          "target": "css=button[type='submit']",
+          "targets": [["css=button[type='submit']", "css:finder"]],
+          "value": ""
+        },
+        {
+          "id": "c2-16",
+          "comment": "Valida que o paciente 'Apollo QA' consta na listagem de pacientes cadastrados",
+          "command": "assertElementPresent",
+          "target": "xpath=//td[contains(.,'Apollo QA')]",
+          "targets": [["xpath=//td[contains(.,'Apollo QA')]", "xpath:innerText"]],
+          "value": ""
+        }
+      ]
+    },
+    {
+      "id": "tc03-simulador-iot-febre",
+      "name": "CT-AUTO-03: Simulador de Telemetria IoT - Detecção de Febre Crítica (40.2°C)",
+      "commands": [
+        {
+          "id": "c3-01",
+          "comment": "Acessa o Simulador de Telemetria IoT (/admin/telemetria)",
+          "command": "open",
+          "target": "/admin/telemetria",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "c3-02",
+          "comment": "Valida título do Simulador IoT",
+          "command": "assertText",
+          "target": "css=h2.fw-bold",
+          "targets": [["css=h2.fw-bold", "css:finder"]],
+          "value": "Simulador de Telemetria IoT do Colar"
+        },
+        {
+          "id": "c3-03",
+          "comment": "Seleciona o primeiro Pet disponível na lista",
+          "command": "select",
+          "target": "id=idPet",
+          "targets": [["id=idPet", "id"]],
+          "value": "index=1"
+        },
+        {
+          "id": "c3-04",
+          "comment": "Clica no preset controlado 'Cenário de Febre (40.2°C)'",
+          "command": "click",
+          "target": "css=button.btn-outline-danger",
+          "targets": [["css=button.btn-outline-danger", "css:finder"]],
+          "value": ""
+        },
+        {
+          "id": "c3-05",
+          "comment": "Confirma que a temperatura foi preenchida com 40.2",
+          "command": "assertValue",
+          "target": "id=temperatura",
+          "targets": [["id=temperatura", "id"]],
+          "value": "40.2"
+        },
+        {
+          "id": "c3-06",
+          "comment": "Confirma que a atividade foi preenchida com 35",
+          "command": "assertValue",
+          "target": "id=atividade",
+          "targets": [["id=atividade", "id"]],
+          "value": "35"
+        },
+        {
+          "id": "c3-07",
+          "comment": "Submete o processamento do Fluxo IoT",
+          "command": "click",
+          "target": "css=button.btn-warning[type='submit']",
+          "targets": [["css=button.btn-warning[type='submit']", "css:finder"]],
+          "value": ""
+        },
+        {
+          "id": "c3-08",
+          "comment": "Valida o alerta de febre gerado e o Health Score recalculado (65.0 / 100)",
+          "command": "assertElementPresent",
+          "target": "xpath=//strong[contains(.,'ALERTA DE FEBRE GERADO:')]",
+          "targets": [["xpath=//strong[contains(.,'ALERTA DE FEBRE GERADO:')]", "xpath:innerText"]],
+          "value": ""
+        }
+      ]
+    },
+    {
+      "id": "tc04-adesao-medicamento-tutor",
+      "name": "CT-AUTO-04: Portal do Tutor - Registro de Dose Esquecida e Alerta Clínico",
+      "commands": [
+        {
+          "id": "c4-01",
+          "comment": "Acessa a tela de login para autenticar como Tutor",
+          "command": "open",
+          "target": "/login",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "c4-02",
+          "comment": "Insere e-mail controlado da Tutora",
+          "command": "type",
+          "target": "id=email",
+          "targets": [["id=email", "id"]],
+          "value": "ana.silva@icloud.com"
+        },
+        {
+          "id": "c4-03",
+          "comment": "Insere senha controlada da Tutora",
+          "command": "type",
+          "target": "id=senha",
+          "targets": [["id=senha", "id"]],
+          "value": "tutor123"
+        },
+        {
+          "id": "c4-04",
+          "comment": "Submete login da Tutora",
+          "command": "click",
+          "target": "css=button[type='submit']",
+          "targets": [["css=button[type='submit']", "css:finder"]],
+          "value": ""
+        },
+        {
+          "id": "c4-05",
+          "comment": "Navega para a tela de Acompanhamento e Adesão Medicamentosa",
+          "command": "open",
+          "target": "/portal-tutor/medicamentos",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "c4-06",
+          "comment": "Valida cabeçalho da tela do Fluxo de Negócio 2",
+          "command": "assertText",
+          "target": "css=h2.fw-bold",
+          "targets": [["css=h2.fw-bold", "css:finder"]],
+          "value": "Acompanhamento e Adesão Medicamentosa"
+        },
+        {
+          "id": "c4-07",
+          "comment": "Seleciona o primeiro medicamento prescrito",
+          "command": "select",
+          "target": "id=idMedicamento",
+          "targets": [["id=idMedicamento", "id"]],
+          "value": "index=1"
+        },
+        {
+          "id": "c4-08",
+          "comment": "Seleciona a opção 'Não / Esquecido' (tomou = N)",
+          "command": "click",
+          "target": "css=label[for='tomouNao']",
+          "targets": [["css=label[for='tomouNao']", "css:finder"]],
+          "value": ""
+        },
+        {
+          "id": "c4-09",
+          "comment": "Preenche observação controlada",
+          "command": "type",
+          "target": "id=observacao",
+          "targets": [["id=observacao", "id"]],
+          "value": "Teste automatizado Selenium IDE: dose não administrada no horário."
+        },
+        {
+          "id": "c4-10",
+          "comment": "Clica em Confirmar Registro",
+          "command": "click",
+          "target": "css=button.btn-success[type='submit']",
+          "targets": [["css=button.btn-success[type='submit']", "css:finder"]],
+          "value": ""
+        },
+        {
+          "id": "c4-11",
+          "comment": "Valida que o registro com badge 'Não Tomou' foi adicionado ao histórico",
+          "command": "assertElementPresent",
+          "target": "xpath=//span[contains(.,'Não Tomou')]",
+          "targets": [["xpath=//span[contains(.,'Não Tomou')]", "xpath:innerText"]],
+          "value": ""
+        }
+      ]
+    },
+    {
+      "id": "tc05-health-report-geracao",
+      "name": "CT-AUTO-05: Fluxo 3 - Histórico e Geração de Health Report Consolidado",
+      "commands": [
+        {
+          "id": "c5-01",
+          "comment": "Autentica como Administrador para acesso irrestrito aos relatórios",
+          "command": "open",
+          "target": "/login",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "c5-02",
+          "comment": "Preenche e-mail Admin",
+          "command": "type",
+          "target": "id=email",
+          "targets": [["id=email", "id"]],
+          "value": "admin@pettrack.com"
+        },
+        {
+          "id": "c5-03",
+          "comment": "Preenche senha Admin",
+          "command": "type",
+          "target": "id=senha",
+          "targets": [["id=senha", "id"]],
+          "value": "admin123"
+        },
+        {
+          "id": "c5-04",
+          "comment": "Entra no sistema",
+          "command": "click",
+          "target": "css=button[type='submit']",
+          "targets": [["css=button[type='submit']", "css:finder"]],
+          "value": ""
+        },
+        {
+          "id": "c5-05",
+          "comment": "Acessa a página de relatórios de saúde do Pet ID 1",
+          "command": "open",
+          "target": "/relatorios/pets/1",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "c5-06",
+          "comment": "Valida presença do botão 'Gerar novo relatório'",
+          "command": "assertElementPresent",
+          "target": "xpath=//button[contains(.,'Gerar novo relatório')]",
+          "targets": [["xpath=//button[contains(.,'Gerar novo relatório')]", "xpath:innerText"]],
+          "value": ""
+        },
+        {
+          "id": "c5-07",
+          "comment": "Dispara a geração de um novo relatório consolidado de saúde",
+          "command": "click",
+          "target": "xpath=//button[contains(.,'Gerar novo relatório')]",
+          "targets": [["xpath=//button[contains(.,'Gerar novo relatório')]", "xpath:innerText"]],
+          "value": ""
+        },
+        {
+          "id": "c5-08",
+          "comment": "Valida que o relatório ou feedback de geração foi renderizado",
+          "command": "assertElementPresent",
+          "target": "css=main",
+          "targets": [["css=main", "css:finder"]],
+          "value": ""
+        }
+      ]
+    }
+  ],
+  "suites": [
+    {
+      "id": "suite-pettrack-sprint4",
+      "name": "Suíte Principal - PetTrack Sprint 4 (5 Casos de Teste)",
+      "persistSession": false,
+      "parallel": false,
+      "timeout": 300,
+      "tests": [
+        "tc01-auth-rbac-403",
+        "tc02-cadastro-pet-oracle",
+        "tc03-simulador-iot-febre",
+        "tc04-adesao-medicamento-tutor",
+        "tc05-health-report-geracao"
+      ]
+    }
+  ],
+  "urls": [
+    "http://localhost:8080"
+  ],
+  "plugins": []
+}

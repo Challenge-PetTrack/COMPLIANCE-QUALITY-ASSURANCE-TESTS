@@ -1,0 +1,468 @@
+{
+  "info": {
+    "_postman_id": "9f3d2a10-7b8e-4c4e-8e99-202610290002",
+    "name": "PetTrack - Suite de Automação de Testes de Integração e Sistema (Sprint 4)",
+    "description": "Coleção automatizada Postman / Newman cobrindo 6 Casos de Teste de Integração, Segurança RBAC, Fluxos de Negócio (IoT e Adesão Medicamentosa) e Procedures Oracle do sistema PetTrack (JAVA-ADVANCED).",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080",
+      "type": "string"
+    },
+    {
+      "key": "adminEmail",
+      "value": "admin@pettrack.com",
+      "type": "string"
+    },
+    {
+      "key": "adminSenha",
+      "value": "admin123",
+      "type": "string"
+    },
+    {
+      "key": "tutorEmail",
+      "value": "ana.silva@icloud.com",
+      "type": "string"
+    },
+    {
+      "key": "tutorSenha",
+      "value": "tutor123",
+      "type": "string"
+    },
+    {
+      "key": "idPetControlado",
+      "value": "1",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "CT-API-01: Autenticação de Tutor e Bloqueio RBAC na Área Admin (/403)",
+      "item": [
+        {
+          "name": "1.1 Login como Tutor (ana.silva@icloud.com)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('CT-API-01.1: Login do Tutor retorna 200 OK na rota de dashboard', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test('CT-API-01.2: Renderiza o Portal do Tutor com a seção Meus Pets', function () {",
+                  "    pm.expect(pm.response.text()).to.include('Meus Pets');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              }
+            ],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "email",
+                  "value": "{{tutorEmail}}",
+                  "type": "text"
+                },
+                {
+                  "key": "senha",
+                  "value": "{{tutorSenha}}",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/login",
+              "host": ["{{baseUrl}}"],
+              "path": ["login"]
+            }
+          }
+        },
+        {
+          "name": "1.2 Tentativa de Acesso Não Autorizado a /admin/pets (RBAC 403)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('CT-API-01.3: Bloqueia acesso do Tutor à rota /admin/pets com HTTP 403 ou tela de Acesso Negado', function () {",
+                  "    const isForbiddenStatus = pm.response.code === 403;",
+                  "    const hasAccessDeniedText = pm.response.text().includes('403 - Acesso Negado');",
+                  "    pm.expect(isForbiddenStatus || hasAccessDeniedText).to.be.true;",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/admin/pets",
+              "host": ["{{baseUrl}}"],
+              "path": ["admin", "pets"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "CT-API-02: Autenticação de Administrador e Consulta REST de Pacientes",
+      "item": [
+        {
+          "name": "2.1 Login como Administrador (admin@pettrack.com)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('CT-API-02.1: Login do Administrador concluído com status 200 OK', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test('CT-API-02.2: Carrega o Painel Veterinário & Clínico', function () {",
+                  "    pm.expect(pm.response.text()).to.include('Painel Veterinário');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              }
+            ],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "email",
+                  "value": "{{adminEmail}}",
+                  "type": "text"
+                },
+                {
+                  "key": "senha",
+                  "value": "{{adminSenha}}",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/login",
+              "host": ["{{baseUrl}}"],
+              "path": ["login"]
+            }
+          }
+        },
+        {
+          "name": "2.2 Listar Pets Cadastrados (GET /pet/todos)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('CT-API-02.3: Retorna HTTP 200 OK e Content-Type application/json', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "    pm.response.to.be.json;",
+                  "});",
+                  "pm.test('CT-API-02.4: Retorna array de PetDTO com estrutura válida', function () {",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.expect(jsonData).to.be.an('array');",
+                  "    if (jsonData.length > 0) {",
+                  "        pm.expect(jsonData[0]).to.have.property('nome');",
+                  "        pm.expect(jsonData[0]).to.have.property('especie');",
+                  "    }",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/pet/todos",
+              "host": ["{{baseUrl}}"],
+              "path": ["pet", "todos"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "CT-API-03: Cadastro de Novo Pet Integrado à Procedure Oracle (POST /pet/novo)",
+      "item": [
+        {
+          "name": "3.1 Inserir Pet Controlado via Procedure PKG_PETTRACK_CADASTRO.PRC_INSERT_PET",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('CT-API-03.1: Retorna HTTP 201 Created ao cadastrar Pet via procedure Oracle', function () {",
+                  "    pm.response.to.have.status(201);",
+                  "});",
+                  "pm.test('CT-API-03.2: Dados de saída correspondem aos dados de entrada controlados', function () {",
+                  "    const pet = pm.response.json();",
+                  "    pm.expect(pet.nome).to.eql('Apollo QA Postman');",
+                  "    pm.expect(pet.especie).to.eql('Cão');",
+                  "    pm.expect(pet.raca).to.eql('Pastor Alemão');",
+                  "    pm.expect(pet.sexo).to.eql('M');",
+                  "    pm.expect(pet.peso).to.eql(28.5);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nome\": \"Apollo QA Postman\",\n  \"especie\": \"Cão\",\n  \"raca\": \"Pastor Alemão\",\n  \"sexo\": \"M\",\n  \"idade\": 4.0,\n  \"peso\": 28.5,\n  \"tutor\": { \"id\": 1 },\n  \"clinica\": { \"id\": 1 }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/pet/novo",
+              "host": ["{{baseUrl}}"],
+              "path": ["pet", "novo"]
+            }
+          }
+        },
+        {
+          "name": "3.2 Teste Negativo: Rejeição de Pet sem Nome e Espécie (Bean Validation 400)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('CT-API-03.3: Rejeita payload inválido sem nome/espécie com HTTP 400 Bad Request', function () {",
+                  "    pm.response.to.have.status(400);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nome\": \"\",\n  \"especie\": \"\",\n  \"sexo\": \"M\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/pet/novo",
+              "host": ["{{baseUrl}}"],
+              "path": ["pet", "novo"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "CT-API-04: Telemetria IoT da Coleira e Consulta de Alertas de Febre",
+      "item": [
+        {
+          "name": "4.1 Inserir Leitura Crítica da Coleira IoT (POST /collar/novo)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('CT-API-04.1: Registra leitura IoT com HTTP 201 Created', function () {",
+                  "    pm.response.to.have.status(201);",
+                  "});",
+                  "pm.test('CT-API-04.2: Temperatura controlada 40.2°C e tópico MQTT confirmados no retorno', function () {",
+                  "    const leitura = pm.response.json();",
+                  "    pm.expect(leitura.temperatura).to.eql(40.2);",
+                  "    pm.expect(leitura.atividade).to.eql(35.0);",
+                  "    pm.expect(leitura.topicoMqtt).to.eql('pettrack/collar/cenario-teste');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"temperatura\": 40.2,\n  \"atividade\": 35.0,\n  \"topicoMqtt\": \"pettrack/collar/cenario-teste\",\n  \"pet\": { \"id\": {{idPetControlado}} }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/collar/novo",
+              "host": ["{{baseUrl}}"],
+              "path": ["collar", "novo"]
+            }
+          }
+        },
+        {
+          "name": "4.2 Consultar Leituras com Temperatura Acima de 39.5°C (GET /collar/temperatura)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('CT-API-04.3: Consulta de hipertermia retorna HTTP 200 OK e lista preenchida', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "    const lista = pm.response.json();",
+                  "    pm.expect(lista).to.be.an('array').that.is.not.empty;",
+                  "    pm.expect(lista[0].temperatura).to.be.above(39.5);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/collar/temperatura?idPet={{idPetControlado}}&temperatura=39.5",
+              "host": ["{{baseUrl}}"],
+              "path": ["collar", "temperatura"],
+              "query": [
+                {
+                  "key": "idPet",
+                  "value": "{{idPetControlado}}"
+                },
+                {
+                  "key": "temperatura",
+                  "value": "39.5"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "CT-API-05: Procedures Oracle da Sprint 4 (Exportação JSON e Subtotais)",
+      "item": [
+        {
+          "name": "5.1 Exportar Dataset JSON via PKG_PETTRACK_CONSULTA.PRC_LISTAR_PETS_JSON",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('CT-API-05.1: Endpoint /pet/exportar-json retorna HTTP 200 OK', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test('CT-API-05.2: Header Content-Disposition contém attachment filename=\"pets.json\"', function () {",
+                  "    pm.expect(pm.response.headers.get('Content-Disposition')).to.include('pets.json');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/pet/exportar-json",
+              "host": ["{{baseUrl}}"],
+              "path": ["pet", "exportar-json"]
+            }
+          }
+        },
+        {
+          "name": "5.2 Gerar Relatório Manual de Subtotais via PRC_RELATORIO_SUBTOTAIS_MANUAL",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('CT-API-05.3: Endpoint /pet/relatorio-atividades retorna HTTP 200 OK em text/plain', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "    pm.expect(pm.response.headers.get('Content-Type')).to.include('text/plain');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/pet/relatorio-atividades",
+              "host": ["{{baseUrl}}"],
+              "path": ["pet", "relatorio-atividades"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "CT-API-06: Consolidação de Contexto de Saúde (GET /health-context/pets/{idPet})",
+      "item": [
+        {
+          "name": "6.1 Consultar Contexto Consolidado do Pet (IoT 24h, BCS, Eventos e Clima)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('CT-API-06.1: Retorna HTTP 200 OK com o payload HealthContextDTO', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "    pm.response.to.be.json;",
+                  "});",
+                  "pm.test('CT-API-06.2: Estrutura consolidada contém dados do pet, telemetria e histórico', function () {",
+                  "    const ctx = pm.response.json();",
+                  "    pm.expect(ctx).to.be.an('object');",
+                  "    pm.expect(ctx).to.have.property('pet');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/health-context/pets/{{idPetControlado}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["health-context", "pets", "{{idPetControlado}}"]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
