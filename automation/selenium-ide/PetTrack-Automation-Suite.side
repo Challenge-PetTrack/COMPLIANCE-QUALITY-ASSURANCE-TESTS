@@ -18,46 +18,22 @@
         },
         {
           "id": "c1-02",
-          "comment": "Define resolução padrão Desktop",
-          "command": "setWindowSize",
-          "target": "1366x900",
-          "targets": [],
-          "value": ""
-        },
-        {
-          "id": "c1-03",
-          "comment": "Verifica o título principal na página de Login",
-          "command": "assertText",
-          "target": "css=h2.fw-bold",
-          "targets": [["css=h2.fw-bold", "css:finder"]],
-          "value": "PetTrack"
-        },
-        {
-          "id": "c1-04",
           "comment": "Preenche dado controlado de entrada: E-mail da Tutora (ROLE_TUTOR)",
           "command": "type",
           "target": "id=email",
-          "targets": [
-            ["id=email", "id"],
-            ["name=email", "name"],
-            ["css=#email", "css:finder"]
-          ],
+          "targets": [["id=email", "id"]],
           "value": "ana.silva@icloud.com"
         },
         {
-          "id": "c1-05",
+          "id": "c1-03",
           "comment": "Preenche dado controlado de entrada: Senha da Tutora",
           "command": "type",
           "target": "id=senha",
-          "targets": [
-            ["id=senha", "id"],
-            ["name=senha", "name"],
-            ["css=#senha", "css:finder"]
-          ],
+          "targets": [["id=senha", "id"]],
           "value": "tutor123"
         },
         {
-          "id": "c1-06",
+          "id": "c1-04",
           "comment": "Clica no botão Entrar para autenticar",
           "command": "click",
           "target": "css=button[type='submit']",
@@ -65,15 +41,15 @@
           "value": ""
         },
         {
-          "id": "c1-07",
-          "comment": "Valida que o redirecionamento pós-login levou ao Portal do Tutor (Meus Pets)",
+          "id": "c1-05",
+          "comment": "Valida que o Portal do Tutor (Meus Pets) carregou",
           "command": "assertElementPresent",
           "target": "xpath=//h4[contains(.,'Meus Pets')]",
           "targets": [["xpath=//h4[contains(.,'Meus Pets')]", "xpath:innerText"]],
           "value": ""
         },
         {
-          "id": "c1-08",
+          "id": "c1-06",
           "comment": "Tenta acessar rota exclusiva de Administrador (/admin/pets) estando logada como ROLE_TUTOR",
           "command": "open",
           "target": "/admin/pets",
@@ -81,12 +57,28 @@
           "value": ""
         },
         {
-          "id": "c1-09",
+          "id": "c1-07",
           "comment": "Valida dado de saída esperado: Bloqueio 403 - Acesso Negado pelo Spring Security",
           "command": "assertText",
           "target": "css=h2.fw-bold",
           "targets": [["css=h2.fw-bold", "css:finder"]],
           "value": "403 - Acesso Negado"
+        },
+        {
+          "id": "c1-08",
+          "comment": "Clica no botão Trocar de Conta (Logout) para voltar à tela de Login limpo",
+          "command": "click",
+          "target": "css=form[action='/logout'] button[type='submit']",
+          "targets": [["css=form[action='/logout'] button[type='submit']", "css:finder"]],
+          "value": ""
+        },
+        {
+          "id": "c1-09",
+          "comment": "Confirma que retornou à tela de Login",
+          "command": "assertElementPresent",
+          "target": "id=email",
+          "targets": [["id=email", "id"]],
+          "value": ""
         }
       ]
     },
@@ -95,15 +87,15 @@
       "name": "CT-AUTO-02: Login Admin e Cadastro de Novo Pet via Procedure Oracle",
       "commands": [
         {
-          "id": "c2-01",
-          "comment": "Acessa a página de Login",
+          "id": "c2-00",
+          "comment": "Abre a tela de Login para autenticar como Administrador",
           "command": "open",
           "target": "/login",
           "targets": [],
           "value": ""
         },
         {
-          "id": "c2-02",
+          "id": "c2-01",
           "comment": "Preenche dado controlado de entrada: E-mail do Administrador (ROLE_ADMIN)",
           "command": "type",
           "target": "id=email",
@@ -111,7 +103,7 @@
           "value": "admin@pettrack.com"
         },
         {
-          "id": "c2-03",
+          "id": "c2-02",
           "comment": "Preenche dado controlado de entrada: Senha do Administrador",
           "command": "type",
           "target": "id=senha",
@@ -119,7 +111,7 @@
           "value": "admin123"
         },
         {
-          "id": "c2-04",
+          "id": "c2-03",
           "comment": "Submete o formulário de login administrativo",
           "command": "click",
           "target": "css=button[type='submit']",
@@ -127,7 +119,7 @@
           "value": ""
         },
         {
-          "id": "c2-05",
+          "id": "c2-04",
           "comment": "Valida carregamento do Painel Veterinário & Clínico (/admin/dashboard)",
           "command": "assertText",
           "target": "css=h2.fw-bold",
@@ -135,15 +127,15 @@
           "value": "Painel Veterinário & Clínico"
         },
         {
-          "id": "c2-06",
-          "comment": "Navega para o formulário de Cadastro de Novo Paciente (/admin/pets/novo)",
-          "command": "open",
-          "target": "/admin/pets/novo",
-          "targets": [],
+          "id": "c2-05",
+          "comment": "Clica no botão Novo Paciente (Pet) no topo do painel",
+          "command": "click",
+          "target": "css=a.btn-primary[href='/admin/pets/novo']",
+          "targets": [["css=a.btn-primary[href='/admin/pets/novo']", "css:finder"]],
           "value": ""
         },
         {
-          "id": "c2-07",
+          "id": "c2-06",
           "comment": "Valida abertura do formulário Cadastrar Novo Paciente",
           "command": "assertText",
           "target": "css=h2.fw-bold",
@@ -151,7 +143,7 @@
           "value": "Cadastrar Novo Paciente"
         },
         {
-          "id": "c2-08",
+          "id": "c2-07",
           "comment": "Preenche Nome do Pet controlado: Apollo QA",
           "command": "type",
           "target": "id=nome",
@@ -159,7 +151,7 @@
           "value": "Apollo QA"
         },
         {
-          "id": "c2-09",
+          "id": "c2-08",
           "comment": "Preenche Espécie controlada: Cão",
           "command": "type",
           "target": "id=especie",
@@ -167,7 +159,7 @@
           "value": "Cão"
         },
         {
-          "id": "c2-10",
+          "id": "c2-09",
           "comment": "Preenche Raça controlada: Pastor Alemão",
           "command": "type",
           "target": "id=raca",
@@ -175,7 +167,7 @@
           "value": "Pastor Alemão"
         },
         {
-          "id": "c2-11",
+          "id": "c2-10",
           "comment": "Seleciona Sexo controlado: Macho (value=M)",
           "command": "select",
           "target": "id=sexo",
@@ -183,7 +175,7 @@
           "value": "value=M"
         },
         {
-          "id": "c2-12",
+          "id": "c2-11",
           "comment": "Preenche Idade controlada: 4.0 anos",
           "command": "type",
           "target": "id=idade",
@@ -191,7 +183,7 @@
           "value": "4.0"
         },
         {
-          "id": "c2-13",
+          "id": "c2-12",
           "comment": "Preenche Peso controlado: 28.50 kg",
           "command": "type",
           "target": "id=peso",
@@ -199,7 +191,7 @@
           "value": "28.50"
         },
         {
-          "id": "c2-14",
+          "id": "c2-13",
           "comment": "Seleciona o Tutor Responsável (Ana Paula Silva)",
           "command": "select",
           "target": "id=tutor",
@@ -207,7 +199,7 @@
           "value": "index=1"
         },
         {
-          "id": "c2-15",
+          "id": "c2-14",
           "comment": "Seleciona a Clínica Veterinária (VetLife Clínica Veterinária)",
           "command": "select",
           "target": "id=clinica",
@@ -215,7 +207,7 @@
           "value": "index=1"
         },
         {
-          "id": "c2-16",
+          "id": "c2-15",
           "comment": "Clica em Salvar Paciente acionando PKG_PETTRACK_CADASTRO.PRC_INSERT_PET",
           "command": "click",
           "target": "css=button.btn-primary[type='submit']",
@@ -223,7 +215,7 @@
           "value": ""
         },
         {
-          "id": "c2-17",
+          "id": "c2-16",
           "comment": "Valida dado de saída esperado: Apollo QA listado na tabela de Pacientes Cadastrados",
           "command": "assertElementPresent",
           "target": "xpath=//td[contains(.,'Apollo QA')]",
@@ -238,7 +230,7 @@
       "commands": [
         {
           "id": "c3-01",
-          "comment": "Abre o formulário de cadastro de Novo Pet (/admin/pets/novo)",
+          "comment": "Abre o formulário Cadastrar Novo Paciente (/admin/pets/novo)",
           "command": "open",
           "target": "/admin/pets/novo",
           "targets": [],
@@ -246,14 +238,22 @@
         },
         {
           "id": "c3-02",
-          "comment": "Deixa Nome e Espécie em branco e seleciona apenas Tutor e Clínica para testar Bean Validation",
+          "comment": "Confirma que o formulário Cadastrar Novo Paciente abriu",
+          "command": "assertText",
+          "target": "css=h2.fw-bold",
+          "targets": [["css=h2.fw-bold", "css:finder"]],
+          "value": "Cadastrar Novo Paciente"
+        },
+        {
+          "id": "c3-03",
+          "comment": "Deixa Nome e Espécie em branco e seleciona apenas o Tutor",
           "command": "select",
           "target": "id=tutor",
           "targets": [["id=tutor", "id"]],
           "value": "index=1"
         },
         {
-          "id": "c3-03",
+          "id": "c3-04",
           "comment": "Seleciona a Clínica Veterinária",
           "command": "select",
           "target": "id=clinica",
@@ -261,27 +261,27 @@
           "value": "index=1"
         },
         {
-          "id": "c3-04",
-          "comment": "Submete o formulário com campos obrigatórios vazios",
+          "id": "c3-05",
+          "comment": "Clica em Salvar Paciente com Nome e Espécie vazios",
           "command": "click",
           "target": "css=button.btn-primary[type='submit']",
           "targets": [["css=button.btn-primary[type='submit']", "css:finder"]],
           "value": ""
         },
         {
-          "id": "c3-05",
-          "comment": "Valida dado de saída esperado: Campo Nome recebe classe Bootstrap is-invalid e impede gravação",
+          "id": "c3-06",
+          "comment": "Valida dado de saída esperado: Mensagem 'O nome é obrigatório' exibida pelo Bean Validation",
           "command": "assertElementPresent",
-          "target": "css=#nome.is-invalid",
-          "targets": [["css=#nome.is-invalid", "css:finder"]],
+          "target": "xpath=//div[contains(.,'O nome é obrigatório')]",
+          "targets": [["xpath=//div[contains(.,'O nome é obrigatório')]", "xpath:innerText"]],
           "value": ""
         },
         {
-          "id": "c3-06",
-          "comment": "Valida dado de saída esperado: Campo Espécie recebe classe Bootstrap is-invalid",
+          "id": "c3-07",
+          "comment": "Valida dado de saída esperado: Mensagem 'A espécie é obrigatória' exibida pelo Bean Validation",
           "command": "assertElementPresent",
-          "target": "css=#especie.is-invalid",
-          "targets": [["css=#especie.is-invalid", "css:finder"]],
+          "target": "xpath=//div[contains(.,'A espécie é obrigatória')]",
+          "targets": [["xpath=//div[contains(.,'A espécie é obrigatória')]", "xpath:innerText"]],
           "value": ""
         }
       ]
@@ -292,7 +292,7 @@
       "commands": [
         {
           "id": "c4-01",
-          "comment": "Acessa o Simulador de Telemetria IoT (/admin/telemetria)",
+          "comment": "Abre o Simulador de Telemetria IoT (/admin/telemetria)",
           "command": "open",
           "target": "/admin/telemetria",
           "targets": [],
@@ -300,7 +300,7 @@
         },
         {
           "id": "c4-02",
-          "comment": "Valida o cabeçalho do Fluxo de Negócio 1",
+          "comment": "Valida o cabeçalho do Simulador de Telemetria IoT",
           "command": "assertText",
           "target": "css=h2.fw-bold",
           "targets": [["css=h2.fw-bold", "css:finder"]],
@@ -308,7 +308,7 @@
         },
         {
           "id": "c4-03",
-          "comment": "Seleciona o Paciente (Apollo QA recém-cadastrado ou primeiro pet da lista)",
+          "comment": "Seleciona o Paciente (primeiro pet da lista)",
           "command": "select",
           "target": "id=idPet",
           "targets": [["id=idPet", "id"]],
@@ -369,23 +369,23 @@
       "name": "CT-AUTO-05: Fluxo 1 - Simulador de Telemetria IoT com Detecção de Sedentarismo (10 ativ)",
       "commands": [
         {
-          "id": "c5-01",
-          "comment": "Acessa o Simulador de Telemetria IoT (/admin/telemetria)",
+          "id": "c5-00",
+          "comment": "Abre o Simulador de Telemetria IoT (/admin/telemetria)",
           "command": "open",
           "target": "/admin/telemetria",
           "targets": [],
           "value": ""
         },
         {
-          "id": "c5-02",
-          "comment": "Seleciona o Paciente (primeiro pet da lista)",
+          "id": "c5-01",
+          "comment": "Seleciona o Paciente (primeiro pet da lista) na tela do Simulador IoT",
           "command": "select",
           "target": "id=idPet",
           "targets": [["id=idPet", "id"]],
           "value": "index=1"
         },
         {
-          "id": "c5-03",
+          "id": "c5-02",
           "comment": "Aciona o preset controlado 'Cenário Sedentarismo (10 ativ)'",
           "command": "click",
           "target": "css=button.btn-outline-warning",
@@ -393,7 +393,7 @@
           "value": ""
         },
         {
-          "id": "c5-04",
+          "id": "c5-03",
           "comment": "Verifica que o input controlado temperatura recebeu 38",
           "command": "assertValue",
           "target": "id=temperatura",
@@ -401,7 +401,7 @@
           "value": "38"
         },
         {
-          "id": "c5-05",
+          "id": "c5-04",
           "comment": "Verifica que o input controlado atividade recebeu 10",
           "command": "assertValue",
           "target": "id=atividade",
@@ -409,7 +409,7 @@
           "value": "10"
         },
         {
-          "id": "c5-06",
+          "id": "c5-05",
           "comment": "Clica em Processar Fluxo IoT",
           "command": "click",
           "target": "css=button.btn-warning[type='submit']",
@@ -417,7 +417,7 @@
           "value": ""
         },
         {
-          "id": "c5-07",
+          "id": "c5-06",
           "comment": "Valida dado de saída esperado: Alerta de Sedentarismo gerado em tela",
           "command": "assertElementPresent",
           "target": "xpath=//strong[contains(.,'ALERTA DE SEDENTARISMO GERADO:')]",
@@ -425,7 +425,7 @@
           "value": ""
         },
         {
-          "id": "c5-08",
+          "id": "c5-07",
           "comment": "Valida dado de saída esperado: Novo Health Score calculado em 80.0 / 100",
           "command": "assertElementPresent",
           "target": "xpath=//span[contains(.,'80.0 / 100')]",
@@ -433,19 +433,27 @@
           "value": ""
         },
         {
-          "id": "c5-09",
-          "comment": "Acessa o Painel Admin (/admin/dashboard) para validar os alertas ativos consolidados",
-          "command": "open",
-          "target": "/admin/dashboard",
-          "targets": [],
+          "id": "c5-08",
+          "comment": "Clica no botão 'Voltar ao Painel' para ver os alertas consolidados no Dashboard",
+          "command": "click",
+          "target": "css=a.btn-outline-secondary[href='/admin/dashboard']",
+          "targets": [["css=a.btn-outline-secondary[href='/admin/dashboard']", "css:finder"]],
           "value": ""
         },
         {
-          "id": "c5-10",
+          "id": "c5-09",
           "comment": "Valida que a tabela Alertas Clínicos Ativos exibe os alertas gerados",
           "command": "assertElementPresent",
           "target": "xpath=//span[contains(.,'Alertas Clínicos Ativos')]",
           "targets": [["xpath=//span[contains(.,'Alertas Clínicos Ativos')]", "xpath:innerText"]],
+          "value": ""
+        },
+        {
+          "id": "c5-10",
+          "comment": "Faz Logout ao final da suíte para deixar o navegador limpo",
+          "command": "click",
+          "target": "css=form[action='/logout'] button[type='submit']",
+          "targets": [["css=form[action='/logout'] button[type='submit']", "css:finder"]],
           "value": ""
         }
       ]

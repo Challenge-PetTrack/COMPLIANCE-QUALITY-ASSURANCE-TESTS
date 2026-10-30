@@ -22,13 +22,15 @@
 ## 🔗 Links Oficiais de Entrega (Sprint 4)
 
 > [!IMPORTANT]
-> **Links Obrigatórios para Correção (Branch `develop`):**
+> **Links Oficiais para Correção (Branch `develop`):**
 > * 📋 **Link de Acesso ao Projeto no AZURE BOARDS / TEST PLANS:**  
->   👉 **[INSIRA_AQUI_O_LINK_DO_SEU_PROJETO_NO_AZURE_DEVOPS]** *(Ex: `https://dev.azure.com/Challenge-PetTrack/PetTrack` — Professor cadastrado com perfil **Basic** na Organização e **Project Administrator** no Projeto)*
+>   👉 **[https://dev.azure.com/RM563650/PetTrack](https://dev.azure.com/RM563650/PetTrack)** *(Professor cadastrado com perfil **Basic** na Organização `RM563650` e **Project Administrator** no Projeto `PetTrack`)*
 > * 🎥 **Link do Vídeo de Demonstração da Automação de Testes (Configuração, Execução e Resultados):**  
->   👉 **[INSIRA_AQUI_O_LINK_DO_VIDEO_DE_AUTOMACAO]** *(YouTube / Loom demonstrando os casos de teste automatizados em execução)*
+>   👉 **[https://www.youtube.com/watch?v=DxxR-jQLC08](https://www.youtube.com/watch?v=DxxR-jQLC08)** *(Demonstração completa dos 5 casos de teste automatizados no Selenium IDE)*
 > * 💻 **Repositório da Aplicação Alvo (Java Advanced - Spring Boot 3.5.5 + Thymeleaf + Oracle):**  
 >   👉 [https://github.com/Challenge-PetTrack/JAVA-ADVANCED](https://github.com/Challenge-PetTrack/JAVA-ADVANCED)
+> * 🗃️ **Repositório Oficial de QA & Tests:**  
+>   👉 [https://github.com/Challenge-PetTrack/COMPLIANCE-QUALITY-ASSURANCE-TESTS](https://github.com/Challenge-PetTrack/COMPLIANCE-QUALITY-ASSURANCE-TESTS)
 
 ---
 
