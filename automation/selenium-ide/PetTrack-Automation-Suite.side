@@ -1,7 +1,7 @@
 {
   "id": "e8a1b9c0-4f12-4d3a-9c11-202610290001",
   "version": "2.0",
-  "name": "PetTrack - Suite de Automação E2E (Sprint 4)",
+  "name": "PetTrack - Suite de Automação E2E Selenium IDE (Sprint 4)",
   "url": "http://localhost:8080",
   "tests": [
     {
@@ -10,7 +10,7 @@
       "commands": [
         {
           "id": "c1-01",
-          "comment": "Garante que a sessão inicia deslogada e acessa a tela de Login",
+          "comment": "Abre a tela de Login do PetTrack",
           "command": "open",
           "target": "/login",
           "targets": [],
@@ -26,7 +26,7 @@
         },
         {
           "id": "c1-03",
-          "comment": "Verifica título principal da aplicação na tela de login",
+          "comment": "Verifica o título principal na página de Login",
           "command": "assertText",
           "target": "css=h2.fw-bold",
           "targets": [["css=h2.fw-bold", "css:finder"]],
@@ -34,7 +34,7 @@
         },
         {
           "id": "c1-04",
-          "comment": "Insere dado controlado de entrada: E-mail da Tutora",
+          "comment": "Preenche dado controlado de entrada: E-mail da Tutora (ROLE_TUTOR)",
           "command": "type",
           "target": "id=email",
           "targets": [
@@ -46,7 +46,7 @@
         },
         {
           "id": "c1-05",
-          "comment": "Insere dado controlado de entrada: Senha da Tutora",
+          "comment": "Preenche dado controlado de entrada: Senha da Tutora",
           "command": "type",
           "target": "id=senha",
           "targets": [
@@ -58,7 +58,7 @@
         },
         {
           "id": "c1-06",
-          "comment": "Submete o formulário de autenticação",
+          "comment": "Clica no botão Entrar para autenticar",
           "command": "click",
           "target": "css=button[type='submit']",
           "targets": [["css=button[type='submit']", "css:finder"]],
@@ -66,7 +66,7 @@
         },
         {
           "id": "c1-07",
-          "comment": "Valida que o Portal do Tutor foi carregado com sucesso",
+          "comment": "Valida que o redirecionamento pós-login levou ao Portal do Tutor (Meus Pets)",
           "command": "assertElementPresent",
           "target": "xpath=//h4[contains(.,'Meus Pets')]",
           "targets": [["xpath=//h4[contains(.,'Meus Pets')]", "xpath:innerText"]],
@@ -74,7 +74,7 @@
         },
         {
           "id": "c1-08",
-          "comment": "Tenta acessar rota exclusiva de Administrador (/admin/pets) com perfil ROLE_TUTOR",
+          "comment": "Tenta acessar rota exclusiva de Administrador (/admin/pets) estando logada como ROLE_TUTOR",
           "command": "open",
           "target": "/admin/pets",
           "targets": [],
@@ -82,7 +82,7 @@
         },
         {
           "id": "c1-09",
-          "comment": "Valida saída esperada: Bloqueio 403 - Acesso Negado",
+          "comment": "Valida dado de saída esperado: Bloqueio 403 - Acesso Negado pelo Spring Security",
           "command": "assertText",
           "target": "css=h2.fw-bold",
           "targets": [["css=h2.fw-bold", "css:finder"]],
@@ -96,7 +96,7 @@
       "commands": [
         {
           "id": "c2-01",
-          "comment": "Acessa a página de login",
+          "comment": "Acessa a página de Login",
           "command": "open",
           "target": "/login",
           "targets": [],
@@ -104,7 +104,7 @@
         },
         {
           "id": "c2-02",
-          "comment": "Preenche e-mail controlado do Administrador",
+          "comment": "Preenche dado controlado de entrada: E-mail do Administrador (ROLE_ADMIN)",
           "command": "type",
           "target": "id=email",
           "targets": [["id=email", "id"]],
@@ -112,7 +112,7 @@
         },
         {
           "id": "c2-03",
-          "comment": "Preenche senha controlada do Administrador",
+          "comment": "Preenche dado controlado de entrada: Senha do Administrador",
           "command": "type",
           "target": "id=senha",
           "targets": [["id=senha", "id"]],
@@ -120,7 +120,7 @@
         },
         {
           "id": "c2-04",
-          "comment": "Realiza login como ROLE_ADMIN",
+          "comment": "Submete o formulário de login administrativo",
           "command": "click",
           "target": "css=button[type='submit']",
           "targets": [["css=button[type='submit']", "css:finder"]],
@@ -128,7 +128,7 @@
         },
         {
           "id": "c2-05",
-          "comment": "Valida carregamento do Painel Veterinário & Clínico",
+          "comment": "Valida carregamento do Painel Veterinário & Clínico (/admin/dashboard)",
           "command": "assertText",
           "target": "css=h2.fw-bold",
           "targets": [["css=h2.fw-bold", "css:finder"]],
@@ -136,7 +136,7 @@
         },
         {
           "id": "c2-06",
-          "comment": "Navega para o formulário de Novo Paciente (/admin/pets/novo)",
+          "comment": "Navega para o formulário de Cadastro de Novo Paciente (/admin/pets/novo)",
           "command": "open",
           "target": "/admin/pets/novo",
           "targets": [],
@@ -144,79 +144,87 @@
         },
         {
           "id": "c2-07",
-          "comment": "Preenche Nome do Pet controlado",
+          "comment": "Valida abertura do formulário Cadastrar Novo Paciente",
+          "command": "assertText",
+          "target": "css=h2.fw-bold",
+          "targets": [["css=h2.fw-bold", "css:finder"]],
+          "value": "Cadastrar Novo Paciente"
+        },
+        {
+          "id": "c2-08",
+          "comment": "Preenche Nome do Pet controlado: Apollo QA",
           "command": "type",
           "target": "id=nome",
           "targets": [["id=nome", "id"]],
           "value": "Apollo QA"
         },
         {
-          "id": "c2-08",
-          "comment": "Preenche Espécie controlada",
+          "id": "c2-09",
+          "comment": "Preenche Espécie controlada: Cão",
           "command": "type",
           "target": "id=especie",
           "targets": [["id=especie", "id"]],
           "value": "Cão"
         },
         {
-          "id": "c2-09",
-          "comment": "Preenche Raça controlada",
+          "id": "c2-10",
+          "comment": "Preenche Raça controlada: Pastor Alemão",
           "command": "type",
           "target": "id=raca",
           "targets": [["id=raca", "id"]],
           "value": "Pastor Alemão"
         },
         {
-          "id": "c2-10",
-          "comment": "Seleciona Sexo Macho (M)",
+          "id": "c2-11",
+          "comment": "Seleciona Sexo controlado: Macho (value=M)",
           "command": "select",
           "target": "id=sexo",
           "targets": [["id=sexo", "id"]],
           "value": "value=M"
         },
         {
-          "id": "c2-11",
-          "comment": "Preenche Idade controlada (4.0 anos)",
+          "id": "c2-12",
+          "comment": "Preenche Idade controlada: 4.0 anos",
           "command": "type",
           "target": "id=idade",
           "targets": [["id=idade", "id"]],
           "value": "4.0"
         },
         {
-          "id": "c2-12",
-          "comment": "Preenche Peso controlado (28.50 kg)",
+          "id": "c2-13",
+          "comment": "Preenche Peso controlado: 28.50 kg",
           "command": "type",
           "target": "id=peso",
           "targets": [["id=peso", "id"]],
           "value": "28.50"
         },
         {
-          "id": "c2-13",
-          "comment": "Seleciona o primeiro Tutor cadastrado",
+          "id": "c2-14",
+          "comment": "Seleciona o Tutor Responsável (Ana Paula Silva)",
           "command": "select",
           "target": "id=tutor",
           "targets": [["id=tutor", "id"]],
           "value": "index=1"
         },
         {
-          "id": "c2-14",
-          "comment": "Seleciona a primeira Clínica Veterinária cadastrada",
+          "id": "c2-15",
+          "comment": "Seleciona a Clínica Veterinária (VetLife Clínica Veterinária)",
           "command": "select",
           "target": "id=clinica",
           "targets": [["id=clinica", "id"]],
           "value": "index=1"
         },
         {
-          "id": "c2-15",
-          "comment": "Submete o formulário acionando PKG_PETTRACK_CADASTRO.PRC_INSERT_PET",
+          "id": "c2-16",
+          "comment": "Clica em Salvar Paciente acionando PKG_PETTRACK_CADASTRO.PRC_INSERT_PET",
           "command": "click",
-          "target": "css=button[type='submit']",
-          "targets": [["css=button[type='submit']", "css:finder"]],
+          "target": "css=button.btn-primary[type='submit']",
+          "targets": [["css=button.btn-primary[type='submit']", "css:finder"]],
           "value": ""
         },
         {
-          "id": "c2-16",
-          "comment": "Valida que o paciente 'Apollo QA' consta na listagem de pacientes cadastrados",
+          "id": "c2-17",
+          "comment": "Valida dado de saída esperado: Apollo QA listado na tabela de Pacientes Cadastrados",
           "command": "assertElementPresent",
           "target": "xpath=//td[contains(.,'Apollo QA')]",
           "targets": [["xpath=//td[contains(.,'Apollo QA')]", "xpath:innerText"]],
@@ -225,11 +233,65 @@
       ]
     },
     {
-      "id": "tc03-simulador-iot-febre",
-      "name": "CT-AUTO-03: Simulador de Telemetria IoT - Detecção de Febre Crítica (40.2°C)",
+      "id": "tc03-validacao-form-negativo",
+      "name": "CT-AUTO-03: Validação de Campos Obrigatórios no Cadastro de Pet (Bean Validation)",
       "commands": [
         {
           "id": "c3-01",
+          "comment": "Abre o formulário de cadastro de Novo Pet (/admin/pets/novo)",
+          "command": "open",
+          "target": "/admin/pets/novo",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "c3-02",
+          "comment": "Deixa Nome e Espécie em branco e seleciona apenas Tutor e Clínica para testar Bean Validation",
+          "command": "select",
+          "target": "id=tutor",
+          "targets": [["id=tutor", "id"]],
+          "value": "index=1"
+        },
+        {
+          "id": "c3-03",
+          "comment": "Seleciona a Clínica Veterinária",
+          "command": "select",
+          "target": "id=clinica",
+          "targets": [["id=clinica", "id"]],
+          "value": "index=1"
+        },
+        {
+          "id": "c3-04",
+          "comment": "Submete o formulário com campos obrigatórios vazios",
+          "command": "click",
+          "target": "css=button.btn-primary[type='submit']",
+          "targets": [["css=button.btn-primary[type='submit']", "css:finder"]],
+          "value": ""
+        },
+        {
+          "id": "c3-05",
+          "comment": "Valida dado de saída esperado: Campo Nome recebe classe Bootstrap is-invalid e impede gravação",
+          "command": "assertElementPresent",
+          "target": "css=#nome.is-invalid",
+          "targets": [["css=#nome.is-invalid", "css:finder"]],
+          "value": ""
+        },
+        {
+          "id": "c3-06",
+          "comment": "Valida dado de saída esperado: Campo Espécie recebe classe Bootstrap is-invalid",
+          "command": "assertElementPresent",
+          "target": "css=#especie.is-invalid",
+          "targets": [["css=#especie.is-invalid", "css:finder"]],
+          "value": ""
+        }
+      ]
+    },
+    {
+      "id": "tc04-simulador-iot-febre",
+      "name": "CT-AUTO-04: Fluxo 1 - Simulador de Telemetria IoT com Detecção de Febre Crítica (40.2°C)",
+      "commands": [
+        {
+          "id": "c4-01",
           "comment": "Acessa o Simulador de Telemetria IoT (/admin/telemetria)",
           "command": "open",
           "target": "/admin/telemetria",
@@ -237,223 +299,153 @@
           "value": ""
         },
         {
-          "id": "c3-02",
-          "comment": "Valida título do Simulador IoT",
+          "id": "c4-02",
+          "comment": "Valida o cabeçalho do Fluxo de Negócio 1",
           "command": "assertText",
           "target": "css=h2.fw-bold",
           "targets": [["css=h2.fw-bold", "css:finder"]],
           "value": "Simulador de Telemetria IoT do Colar"
         },
         {
-          "id": "c3-03",
-          "comment": "Seleciona o primeiro Pet disponível na lista",
+          "id": "c4-03",
+          "comment": "Seleciona o Paciente (Apollo QA recém-cadastrado ou primeiro pet da lista)",
           "command": "select",
           "target": "id=idPet",
           "targets": [["id=idPet", "id"]],
           "value": "index=1"
         },
         {
-          "id": "c3-04",
-          "comment": "Clica no preset controlado 'Cenário de Febre (40.2°C)'",
+          "id": "c4-04",
+          "comment": "Aciona o preset controlado 'Cenário de Febre (40.2°C)'",
           "command": "click",
           "target": "css=button.btn-outline-danger",
           "targets": [["css=button.btn-outline-danger", "css:finder"]],
           "value": ""
         },
         {
-          "id": "c3-05",
-          "comment": "Confirma que a temperatura foi preenchida com 40.2",
+          "id": "c4-05",
+          "comment": "Verifica que o input controlado temperatura recebeu 40.2",
           "command": "assertValue",
           "target": "id=temperatura",
           "targets": [["id=temperatura", "id"]],
           "value": "40.2"
         },
         {
-          "id": "c3-06",
-          "comment": "Confirma que a atividade foi preenchida com 35",
+          "id": "c4-06",
+          "comment": "Verifica que o input controlado atividade recebeu 35",
           "command": "assertValue",
           "target": "id=atividade",
           "targets": [["id=atividade", "id"]],
           "value": "35"
         },
         {
-          "id": "c3-07",
-          "comment": "Submete o processamento do Fluxo IoT",
+          "id": "c4-07",
+          "comment": "Clica em Processar Fluxo IoT",
           "command": "click",
           "target": "css=button.btn-warning[type='submit']",
           "targets": [["css=button.btn-warning[type='submit']", "css:finder"]],
           "value": ""
         },
         {
-          "id": "c3-08",
-          "comment": "Valida o alerta de febre gerado e o Health Score recalculado (65.0 / 100)",
+          "id": "c4-08",
+          "comment": "Valida dado de saída esperado: Alerta clínico de febre disparado em tela",
           "command": "assertElementPresent",
           "target": "xpath=//strong[contains(.,'ALERTA DE FEBRE GERADO:')]",
           "targets": [["xpath=//strong[contains(.,'ALERTA DE FEBRE GERADO:')]", "xpath:innerText"]],
           "value": ""
-        }
-      ]
-    },
-    {
-      "id": "tc04-adesao-medicamento-tutor",
-      "name": "CT-AUTO-04: Portal do Tutor - Registro de Dose Esquecida e Alerta Clínico",
-      "commands": [
-        {
-          "id": "c4-01",
-          "comment": "Acessa a tela de login para autenticar como Tutor",
-          "command": "open",
-          "target": "/login",
-          "targets": [],
-          "value": ""
-        },
-        {
-          "id": "c4-02",
-          "comment": "Insere e-mail controlado da Tutora",
-          "command": "type",
-          "target": "id=email",
-          "targets": [["id=email", "id"]],
-          "value": "ana.silva@icloud.com"
-        },
-        {
-          "id": "c4-03",
-          "comment": "Insere senha controlada da Tutora",
-          "command": "type",
-          "target": "id=senha",
-          "targets": [["id=senha", "id"]],
-          "value": "tutor123"
-        },
-        {
-          "id": "c4-04",
-          "comment": "Submete login da Tutora",
-          "command": "click",
-          "target": "css=button[type='submit']",
-          "targets": [["css=button[type='submit']", "css:finder"]],
-          "value": ""
-        },
-        {
-          "id": "c4-05",
-          "comment": "Navega para a tela de Acompanhamento e Adesão Medicamentosa",
-          "command": "open",
-          "target": "/portal-tutor/medicamentos",
-          "targets": [],
-          "value": ""
-        },
-        {
-          "id": "c4-06",
-          "comment": "Valida cabeçalho da tela do Fluxo de Negócio 2",
-          "command": "assertText",
-          "target": "css=h2.fw-bold",
-          "targets": [["css=h2.fw-bold", "css:finder"]],
-          "value": "Acompanhamento e Adesão Medicamentosa"
-        },
-        {
-          "id": "c4-07",
-          "comment": "Seleciona o primeiro medicamento prescrito",
-          "command": "select",
-          "target": "id=idMedicamento",
-          "targets": [["id=idMedicamento", "id"]],
-          "value": "index=1"
-        },
-        {
-          "id": "c4-08",
-          "comment": "Seleciona a opção 'Não / Esquecido' (tomou = N)",
-          "command": "click",
-          "target": "css=label[for='tomouNao']",
-          "targets": [["css=label[for='tomouNao']", "css:finder"]],
-          "value": ""
         },
         {
           "id": "c4-09",
-          "comment": "Preenche observação controlada",
-          "command": "type",
-          "target": "id=observacao",
-          "targets": [["id=observacao", "id"]],
-          "value": "Teste automatizado Selenium IDE: dose não administrada no horário."
-        },
-        {
-          "id": "c4-10",
-          "comment": "Clica em Confirmar Registro",
-          "command": "click",
-          "target": "css=button.btn-success[type='submit']",
-          "targets": [["css=button.btn-success[type='submit']", "css:finder"]],
-          "value": ""
-        },
-        {
-          "id": "c4-11",
-          "comment": "Valida que o registro com badge 'Não Tomou' foi adicionado ao histórico",
+          "comment": "Valida dado de saída esperado: Novo Health Score calculado em 65.0 / 100",
           "command": "assertElementPresent",
-          "target": "xpath=//span[contains(.,'Não Tomou')]",
-          "targets": [["xpath=//span[contains(.,'Não Tomou')]", "xpath:innerText"]],
+          "target": "xpath=//span[contains(.,'65.0 / 100')]",
+          "targets": [["xpath=//span[contains(.,'65.0 / 100')]", "xpath:innerText"]],
           "value": ""
         }
       ]
     },
     {
-      "id": "tc05-health-report-geracao",
-      "name": "CT-AUTO-05: Fluxo 3 - Histórico e Geração de Health Report Consolidado",
+      "id": "tc05-simulador-iot-sedentarismo",
+      "name": "CT-AUTO-05: Fluxo 1 - Simulador de Telemetria IoT com Detecção de Sedentarismo (10 ativ)",
       "commands": [
         {
           "id": "c5-01",
-          "comment": "Autentica como Administrador para acesso irrestrito aos relatórios",
+          "comment": "Acessa o Simulador de Telemetria IoT (/admin/telemetria)",
           "command": "open",
-          "target": "/login",
+          "target": "/admin/telemetria",
           "targets": [],
           "value": ""
         },
         {
           "id": "c5-02",
-          "comment": "Preenche e-mail Admin",
-          "command": "type",
-          "target": "id=email",
-          "targets": [["id=email", "id"]],
-          "value": "admin@pettrack.com"
+          "comment": "Seleciona o Paciente (primeiro pet da lista)",
+          "command": "select",
+          "target": "id=idPet",
+          "targets": [["id=idPet", "id"]],
+          "value": "index=1"
         },
         {
           "id": "c5-03",
-          "comment": "Preenche senha Admin",
-          "command": "type",
-          "target": "id=senha",
-          "targets": [["id=senha", "id"]],
-          "value": "admin123"
+          "comment": "Aciona o preset controlado 'Cenário Sedentarismo (10 ativ)'",
+          "command": "click",
+          "target": "css=button.btn-outline-warning",
+          "targets": [["css=button.btn-outline-warning", "css:finder"]],
+          "value": ""
         },
         {
           "id": "c5-04",
-          "comment": "Entra no sistema",
-          "command": "click",
-          "target": "css=button[type='submit']",
-          "targets": [["css=button[type='submit']", "css:finder"]],
-          "value": ""
+          "comment": "Verifica que o input controlado temperatura recebeu 38",
+          "command": "assertValue",
+          "target": "id=temperatura",
+          "targets": [["id=temperatura", "id"]],
+          "value": "38"
         },
         {
           "id": "c5-05",
-          "comment": "Acessa a página de relatórios de saúde do Pet ID 1",
-          "command": "open",
-          "target": "/relatorios/pets/1",
-          "targets": [],
-          "value": ""
+          "comment": "Verifica que o input controlado atividade recebeu 10",
+          "command": "assertValue",
+          "target": "id=atividade",
+          "targets": [["id=atividade", "id"]],
+          "value": "10"
         },
         {
           "id": "c5-06",
-          "comment": "Valida presença do botão 'Gerar novo relatório'",
-          "command": "assertElementPresent",
-          "target": "xpath=//button[contains(.,'Gerar novo relatório')]",
-          "targets": [["xpath=//button[contains(.,'Gerar novo relatório')]", "xpath:innerText"]],
+          "comment": "Clica em Processar Fluxo IoT",
+          "command": "click",
+          "target": "css=button.btn-warning[type='submit']",
+          "targets": [["css=button.btn-warning[type='submit']", "css:finder"]],
           "value": ""
         },
         {
           "id": "c5-07",
-          "comment": "Dispara a geração de um novo relatório consolidado de saúde",
-          "command": "click",
-          "target": "xpath=//button[contains(.,'Gerar novo relatório')]",
-          "targets": [["xpath=//button[contains(.,'Gerar novo relatório')]", "xpath:innerText"]],
+          "comment": "Valida dado de saída esperado: Alerta de Sedentarismo gerado em tela",
+          "command": "assertElementPresent",
+          "target": "xpath=//strong[contains(.,'ALERTA DE SEDENTARISMO GERADO:')]",
+          "targets": [["xpath=//strong[contains(.,'ALERTA DE SEDENTARISMO GERADO:')]", "xpath:innerText"]],
           "value": ""
         },
         {
           "id": "c5-08",
-          "comment": "Valida que o relatório ou feedback de geração foi renderizado",
+          "comment": "Valida dado de saída esperado: Novo Health Score calculado em 80.0 / 100",
           "command": "assertElementPresent",
-          "target": "css=main",
-          "targets": [["css=main", "css:finder"]],
+          "target": "xpath=//span[contains(.,'80.0 / 100')]",
+          "targets": [["xpath=//span[contains(.,'80.0 / 100')]", "xpath:innerText"]],
+          "value": ""
+        },
+        {
+          "id": "c5-09",
+          "comment": "Acessa o Painel Admin (/admin/dashboard) para validar os alertas ativos consolidados",
+          "command": "open",
+          "target": "/admin/dashboard",
+          "targets": [],
+          "value": ""
+        },
+        {
+          "id": "c5-10",
+          "comment": "Valida que a tabela Alertas Clínicos Ativos exibe os alertas gerados",
+          "command": "assertElementPresent",
+          "target": "xpath=//span[contains(.,'Alertas Clínicos Ativos')]",
+          "targets": [["xpath=//span[contains(.,'Alertas Clínicos Ativos')]", "xpath:innerText"]],
           "value": ""
         }
       ]
@@ -463,15 +455,15 @@
     {
       "id": "suite-pettrack-sprint4",
       "name": "Suíte Principal - PetTrack Sprint 4 (5 Casos de Teste)",
-      "persistSession": false,
+      "persistSession": true,
       "parallel": false,
       "timeout": 300,
       "tests": [
         "tc01-auth-rbac-403",
         "tc02-cadastro-pet-oracle",
-        "tc03-simulador-iot-febre",
-        "tc04-adesao-medicamento-tutor",
-        "tc05-health-report-geracao"
+        "tc03-validacao-form-negativo",
+        "tc04-simulador-iot-febre",
+        "tc05-simulador-iot-sedentarismo"
       ]
     }
   ],

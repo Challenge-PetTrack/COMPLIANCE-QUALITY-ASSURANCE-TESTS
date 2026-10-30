@@ -83,12 +83,12 @@ Como o ecossistema **PetTrack (`JAVA-ADVANCED`)** possui tanto **telas de interf
 
 ### 1️⃣ Automação Record & Playback (Interface de Usuário) — Selenium IDE
 * **Arquivo do Projeto:** [`automation/selenium-ide/PetTrack-Automation-Suite.side`](automation/selenium-ide/PetTrack-Automation-Suite.side)
-* **Casos de Teste Automatizados Incluídos (5 Casos):**
+* **Casos de Teste Automatizados Incluídos (5 Casos E2E auto-suficientes):**
   1. `CT-AUTO-01`: Autenticação de Tutor (`ana.silva@icloud.com`) e validação de bloqueio RBAC na Área Admin (`/admin/pets` -> `403 - Acesso Negado`).
-  2. `CT-AUTO-02`: Autenticação de Administrador (`admin@pettrack.com`) e cadastro completo do paciente `Apollo QA` integrado à procedure Oracle `PRC_INSERT_PET`.
-  3. `CT-AUTO-03`: Simulador de Telemetria IoT com injeção do preset controlado de febre (`40.2°C` / `35` ativ) e asserção do alerta clínico e Health Score (`65.0 / 100`).
-  4. `CT-AUTO-04`: Portal do Tutor — Registro de dose de medicamento não administrada (`tomou = N`) e validação do badge `Não Tomou` e alerta veterinário.
-  5. `CT-AUTO-05`: Acesso ao histórico e disparo da geração de novo Relatório de Saúde Consolidado (`/relatorios/pets/1`).
+  2. `CT-AUTO-02`: Autenticação de Administrador (`admin@pettrack.com`) e cadastro completo do paciente `Apollo QA` integrado à procedure Oracle `PKG_PETTRACK_CADASTRO.PRC_INSERT_PET`.
+  3. `CT-AUTO-03`: Validação de Campos Obrigatórios (Bean Validation) no formulário de Cadastro de Pet (`#nome.is-invalid` e `#especie.is-invalid`).
+  4. `CT-AUTO-04`: Fluxo 1 — Simulador de Telemetria IoT com injeção do preset controlado de Febre Crítica (`40.2°C` / `35` ativ) e asserção do alerta clínico e Health Score (`65.0 / 100`).
+  5. `CT-AUTO-05`: Fluxo 1 — Simulador de Telemetria IoT com injeção do preset controlado de Sedentarismo (`38.0°C` / `10` ativ), asserção do Health Score (`80.0 / 100`) e verificação no painel `Alertas Clínicos Ativos`.
 
 ### 2️⃣ Automação de Testes de Integração e API — Postman / Newman
 * **Coleção:** [`automation/postman/PetTrack-API-Tests.postman_collection.json`](automation/postman/PetTrack-API-Tests.postman_collection.json)
